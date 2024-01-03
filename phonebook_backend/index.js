@@ -7,7 +7,11 @@ const app = express()
 // Create a custom morgan token
 morgan.token('body', (req, res) => JSON.stringify(req.body))
 
+// Allow cross origin resource sharing
 app.use(cors())
+// Make sure to fetch the static page
+app.use(express.static('dist'))
+
 app.use(express.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
