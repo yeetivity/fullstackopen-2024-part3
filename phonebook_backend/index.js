@@ -1,6 +1,8 @@
+require('dotenv').config()  // Use for environment variables
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+const Person = require('./models/person')
 
 const app = express()
 
@@ -15,68 +17,34 @@ app.use(express.static('dist'))
 app.use(express.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
-let persons = [
-    { 
-      "id": 1,
-      "name": "Arto Hellas", 
-      "number": "040-123456"
-    },
-    { 
-      "id": 2,
-      "name": "Ada Lovelace", 
-      "number": "39-44-5323523"
-    },
-    { 
-      "id": 3,
-      "name": "Dan Abramov", 
-      "number": "12-43-234345"
-    },
-    { 
-      "id": 4,
-      "name": "Mary Poppendieck", 
-      "number": "39-23-6423122"
-    }
-]
+// Initialise persons to be empty
+let persons = []
+
 // Information routes
 app.get('/info', (request, response) => {
-    response.send(`<p>Phonebook has info for ${persons.length} people </p> <p> ${new Date()}</>`)
+    Person.countDocuments({})
+    .then(count => {
+        console.log("🚀 ~ file: index.js:26 ~ app.get ~ count:", count)
+        response.send(`<p> The Phonebook currently contains ${count} contacts </p> <p> ${new Date()} </p>`)
+    })
+    .catch(error => {
+        console.error("Error counting documents", error)
+        response.status(500).send('Internal Server Error')
+    })
 })
 
 // Read routes
 app.get('/api/persons', (request, response) => {
-    response.json(persons)
+    Person.find({}).then(persons => {
+        response.json(persons)
+    })
 })
 
 app.get('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    console.log("🚀 ~ file: index.js:39 ~ app.get ~ id:", id)
-    
-    const person = persons.find(p => p.id === id)
-    console.log("🚀 ~ file: index.js:42 ~ app.get ~ person:", person)
-
-    if (person){
+    Person.findById(request.params.id).then(person => {
         response.json(person)
-    } else {
-        response.send(404, "Person not found")
-    }
+    })
 })
-
-// Create routes
-const generateId = () => {
-    let generatedId = 0
-    let exists = true
-
-    while (exists){
-        generatedId = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)
-
-        // Check if the generated Id already exists in persons
-        if (!persons.some(p => p.id === generatedId)){
-            exists = false
-        }
-    }
-    console.log("Generated the following ID: ", generatedId)
-    return generatedId
-}
 
 app.post('/api/persons', (request, response) => {
     const body = request.body
@@ -93,19 +61,17 @@ app.post('/api/persons', (request, response) => {
         })
     }
 
-    const person = {
+    const person = new Person({
         name: body.name,
         number: body.number,
-        id: generateId(),
-    }
+    })
 
-    persons = persons.concat(person)
-    console.log('person successfully added to the list')
-
-    response.json(person)
+    person.save().then(savedPerson => {
+        response.json(savedPerson)
+    })
 })
 
-// Delete routes
+// Delete routes (DOESN'T WORK WITH MONGO YET)
 app.delete('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
     persons = persons.filter(p => p.id !== id)
@@ -114,7 +80,7 @@ app.delete('/api/persons/:id', (request, response) => {
 })
 
 // Running the application
-const PORT = process.env.port || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })

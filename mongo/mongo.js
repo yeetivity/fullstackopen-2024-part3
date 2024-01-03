@@ -18,14 +18,14 @@ const url = `mongodb+srv://fullstack:${password}@cluster0.ue4jccp.mongodb.net/ph
 mongoose.set('strictQuery', false)
 mongoose.connect(url)
 
-const contactSchema = new mongoose.Schema({
+const personSchema = new mongoose.Schema({
     name: String,
     number: String,
 })
 
-const Contact = mongoose.model('Contact', contactSchema)
+const Person = mongoose.model('Person', personSchema)
 
-const contact = new Contact({
+const person = new Person({
     name: name,
     number: number,
 })
@@ -33,9 +33,9 @@ const contact = new Contact({
 // Function to display users and close the application
 const displayUsersAndClose = () => {
     console.log("phonebook: ")
-    Contact.find({}).then((result) => {
-        result.forEach((contact) => {
-            console.log(`${contact.name} ${contact.number}`)
+    Person.find({}).then((result) => {
+        result.forEach((person) => {
+            console.log(`${person.name} ${person.number}`)
         })
         mongoose.connection.close()
         rl.close()
@@ -55,7 +55,7 @@ if (process.argv.length < 5) {
     })
 } else {
     // Save the contact and close the application
-    contact.save().then((result) => {
+    person.save().then((result) => {
     console.log('contact saved!')
     mongoose.connection.close()
     rl.close()

@@ -12,8 +12,8 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name": "Jitse van Esch",
-    "number": "+31639605418"
+    "name": "John Doe",
+    "number": "+123456789"
 }
 
 ### This one should give a "missing content" error
