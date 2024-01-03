@@ -1,1 +1,14 @@
-DELETE http://localhost:3001/api/persons/4
+### First get all existing persons
+GET http://localhost:3001/api/persons
+
+### Add a John Doe
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "number": "+123456789"
+}
+
+### Then delete John Doe with an Id
+DELETE http://localhost:3001/api/persons/6595c2a691b5839a5d8375a4

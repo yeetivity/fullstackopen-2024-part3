@@ -1,0 +1,20 @@
+### First add a John Doe
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "number": "+123456789"
+}
+
+### Then update John Doe using the Id
+PUT http://localhost:3001/api/persons/6595cb031f3d46b81b66f84d
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "number": "+23456789"
+}
+
+### Confirm that its updated
+GET http://localhost:3001/api/persons
