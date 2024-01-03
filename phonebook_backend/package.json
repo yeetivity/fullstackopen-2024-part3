@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:ui": "rm -rf dist && cd ../../fullstackopen-2024/part3/phonebook_frontend/ && npm run build && cp -r dist ../../../fullstackopen-2024-part3/phonebook_backend/"
+    "build:ui": "rm -rf dist && cd ../phonebook_frontend/ && npm run build && cp -r dist ../phonebook_backend/"
   },
   "author": "yeetivity (Jitse J. van Esch)",
   "license": "MIT",
