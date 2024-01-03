@@ -1,0 +1,14 @@
+### Test get request
+GET https://phonebook-backend-ht83.onrender.com/api/persons
+
+### Test delete request
+DELETE https://phonebook-backend-ht83.onrender.com/api/persons/4
+
+### Test post request
+POST https://phonebook-backend-ht83.onrender.com/api/persons
+Content-Type: application/json
+
+{
+    "name": "Jitse van Esch",
+    "number": "+31639605418"
+}
