@@ -7,7 +7,7 @@ const Person = require('./models/person')
 const app = express()
 
 // Create a custom morgan token
-morgan.token('body', (req, res) => JSON.stringify(req.body))
+morgan.token('body', (req) => JSON.stringify(req.body))
 
 // Allow cross origin resource sharing
 app.use(cors())
@@ -23,11 +23,11 @@ let persons = []
 app.get('/info', (request, response) => {
     Person.countDocuments({})
     .then(count => {
-        console.log("🚀 ~ file: index.js:26 ~ app.get ~ count:", count)
+        console.log('🚀 ~ file: index.js:26 ~ app.get ~ count:', count)
         response.send(`<p> The Phonebook currently contains ${count} contacts </p> <p> ${new Date()} </p>`)
     })
     .catch(error => {
-        console.error("Error counting documents", error)
+        console.error('Error counting documents', error)
         response.status(500).send('Internal Server Error')
     })
 })
@@ -77,7 +77,7 @@ app.post('/api/persons', (request, response, next) => {
 // Delete routes
 app.delete('/api/persons/:id', (request, response, next) => {
     Person.findByIdAndDelete(request.params.id)
-        .then(result => {
+        .then(() => {
             response.status(204).end()
         })
         .catch(error => next(error))
@@ -85,7 +85,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
 
 // Update route
 app.put('/api/persons/:id', (request, response, next) => {
-    const { name, number} = request.body
+    const { name, number } = request.body
 
     Person.findByIdAndUpdate(
         request.params.id,

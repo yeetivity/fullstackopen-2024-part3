@@ -7,7 +7,8 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:ui": "rm -rf dist && cd ../phonebook_frontend/ && npm run build && cp -r dist ../phonebook_backend/"
+    "build:ui": "rm -rf dist && cd ../phonebook_frontend/ && npm run build && cp -r dist ../phonebook_backend/",
+    "lint": "eslint ."
   },
   "author": "yeetivity (Jitse J. van Esch)",
   "license": "MIT",
@@ -19,6 +20,8 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.33.2",
     "nodemon": "^3.0.2"
   }
 }
