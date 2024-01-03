@@ -8,12 +8,21 @@ Content-Type: application/json
 }
 
 ### Then update John Doe using the Id
-PUT http://localhost:3001/api/persons/6595cb031f3d46b81b66f84d
+PUT http://localhost:3001/api/persons/6595cfa0d354f7d8a99935ce
 Content-Type: application/json
 
 {
     "name": "John Doe",
     "number": "+23456789"
+}
+
+### Try to update without number
+PUT http://localhost:3001/api/persons/6595cfa0d354f7d8a99935ce
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "number": ""
 }
 
 ### Confirm that its updated
