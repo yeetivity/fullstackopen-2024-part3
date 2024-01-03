@@ -38,10 +38,6 @@ let persons = [
     }
 ]
 // Information routes
-app.get('/', (request, response) => {
-    response.send('<p> Welcome to the app that provides you with persons from a contact book:<br/>Use /api/persons to receive the persons </p>')
-})
-
 app.get('/info', (request, response) => {
     response.send(`<p>Phonebook has info for ${persons.length} people </p> <p> ${new Date()}</>`)
 })
