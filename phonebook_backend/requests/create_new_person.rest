@@ -4,16 +4,16 @@ Content-Type: application/json
 
 {
     "name": "Arto Hellas",
-    "number": "+37890"
+    "number": "+378-900000"
 }
 
-### This one is supposed to work
+### This one should work
 POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
     "name": "John Doe",
-    "number": "+123456789"
+    "number": "+4672-4485249"
 }
 
 ### This one should give a "missing content" error
@@ -21,8 +21,8 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name": "",
-    "number": "+31639605418"
+    "name": "Jane Doe",
+    "number": "+316-39605418"
 }
 
 ### This one should give a "missing content" error
@@ -33,3 +33,5 @@ Content-Type: application/json
     "name": "Jitse van Esch",
     "number": ""
 }
+
+### This one should give a wrong phonenumber format error
